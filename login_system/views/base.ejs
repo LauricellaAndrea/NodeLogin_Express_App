@@ -7,6 +7,13 @@
             <div class="title pb-5">
                 <h2 style="color: #FFFFFF" class="font-weight-bold">Login System</h2>
                 <span>Login per utenti esistenti</span>
+                <% if (locals.logout) { %>
+                    <div class="alter alert-success text-center">
+                        <%= logout %>
+                    </div>
+                <% } %>
+                
+              
             </div>
             <form action="/route/login" method="POST" class="pt-3">
                 <div class="form-group">

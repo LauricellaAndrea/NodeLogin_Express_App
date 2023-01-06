@@ -13,12 +13,33 @@ router.post('/login', (req, res) =>{
 //all'interno di questo percorso controllerà semplicemente l'input dell'utente, e renderizzeremo l'utente su questo percorso
 if (req.body.email == credential.email && req.body.password == credential.password){
     req.session.user = req.body.email;
-    // req.redirect('/dashboard')
-    res.end("Login effettuato con successo ")
+    res.redirect('/route/dashboard')
+    // res.end("Login effettuato con successo ")
 }else{
     res.end("Credenziali NON VALIDE")
 }
 });
+
+//Route for dashboard
+router.get('/dashboard', (req, res) => {
+    if(req.session.user){
+        res.render('dashboard', {user: req.session.user})
+    }else {
+        res.send("Utente non autorizzato")
+    }
+})
+
+//Route for logout
+router.get('/logout', (req, res) => {
+   req.session.destroy(function(err){
+    if(err){
+        console.log(err);
+        res.send("Error")
+    }else {
+        res.render('base', {title: "Express", logout: "Logout Effettuato"})
+    }
+   })
+})
 
 
 module.exports = router;
